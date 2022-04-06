@@ -12,7 +12,7 @@
     - average([1, '2']) // Retorno: undefined;
 */
 
-const checkNumbers = (element) => typeof element !== "number";
+const checkNumbers = (element) => typeof element !== 'number';
 
 const average = (numbers) => {
   if (numbers.some(checkNumbers) || numbers.length === 0) {
