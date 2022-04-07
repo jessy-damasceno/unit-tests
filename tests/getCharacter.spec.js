@@ -44,9 +44,7 @@ Retorno:
 const nome = 'Tunico irmão do Leandrão, o Lobo Solitário'
 
 describe('9 - Implemente os casos de teste da função `getCharacter`', () => {
-  it('Verifica se a função `getCharacter` retorna o objeto do personagem corretamente.', () => {
-    fail('Teste vazio!');
-  });
+  
   // ESCREVA SEUS TESTES ABAIXO:
   // Teste se a função, quando não recebe nenhum parâmetro, retorna undefined.
   it('Teste se a função, quando não recebe nenhum parâmetro, retorna undefined.', () => {
