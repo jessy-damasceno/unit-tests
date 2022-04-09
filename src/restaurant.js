@@ -57,18 +57,18 @@
 
 //------------------------------------------------------------------------------------------
 
-// PASSO 3: Crie uma função, separada da função `createMenu()`, que, dada uma string recebida por parâmetro, 
+// PASSO 3: Crie uma função, separada da função `createMenu()`, que, dada uma string recebida por parâmetro,
 // adiciona essa string ao array de `objetoRetornado.consumption`. Adicione essa função à chave `order`.
-// DICA: para criar isso, você pode: 
+// DICA: para criar isso, você pode:
 // - Definir a função `createMenu()`
-// - Definir o objeto que a `createMenu()` retorna, mas separadamente 
+// - Definir o objeto que a `createMenu()` retorna, mas separadamente
 // - E, depois, definir a função que será atribuída a `order`.
 // ```
 // const restaurant = {}
 //
 // const createMenu = (myMenu) => // Lógica que edita o objeto `restaurant`
 //
-// const orderFromMenu = (request) => // Lógica que adiciona à chave `consumption` de `restaurant` a string recebida no parâmetro `request`. 
+// const orderFromMenu = (request) => // Lógica que adiciona à chave `consumption` de `restaurant` a string recebida no parâmetro `request`.
 // // Essa função deve ser associada à chave `order` de `restaurant`
 // ```
 // Agora faça o TESTE 6 no arquivo `tests/restaurant.spec.js`.
@@ -79,6 +79,51 @@
 // que percorre por todos os itens de `objetoRetornado.consumption`, soma o preço deles e retorna o valor somado acrescido de 10%.
 // DICA: para isso, você precisará percorrer tanto o objeto da chave `food` quanto o objeto da chave `drink`.
 
-const createMenu = () => {};
+const pushConsumption = (key, string) => key.push(string);
+
+// pegarValor = [] com os pushes dos preços da order;
+
+// const somarValor = () => pegarValor().reduce((acc, cur) => acc + cur, 0);
+// soma o array de pegarValor;
+
+const createMenu = (objeto) => {
+  const objetoMenu = {
+    fetchMenu: () => objeto,
+    consumption: [],
+    order: (string) => pushConsumption(objetoMenu.consumption, string),
+    pay: () => {
+      const pedidos = objetoMenu.consumption;
+      const itemsPrecos = Object.entries(objetoMenu.fetchMenu());
+    },
+  };
+
+  return objetoMenu;
+};
+
+const objetoCriado = createMenu({
+  food: {
+    coxinha: 5,
+    empada: 6,
+    pastelDeCarne: 8,
+    pastelDePizza: 10,
+    pastelDeQueijo: 9,
+  },
+  drink: {
+    agua: 4,
+    sucoDeFrutas: 8,
+    sucoDeLaranja: 7,
+    coca: 3,
+  },
+});
+objetoCriado.order('coxinha');
+
+const fetchMenu = [
+  Object.values(objetoCriado.fetchMenu().food),
+];
+
+const valores = Object.values(fetchMenu);
+
+// console.log(fetchMenu);
+console.log(valores);
 
 module.exports = createMenu;
