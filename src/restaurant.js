@@ -81,22 +81,50 @@
 
 const pushConsumption = (key, string) => key.push(string);
 
-// pegarValor = [] com os pushes dos preços da order;
+const somaComida = (item, comidas, valores) => {
+  let total = 0;
+  for (let i = 0; i < comidas.length; i += 1) {
+    if (item === comidas[i]) {
+      total += valores[i];
+      break;
+    }
+  }
+  return total;
+};
 
-// const somarValor = () => pegarValor().reduce((acc, cur) => acc + cur, 0);
-// soma o array de pegarValor;
+const somaBebida = (item, bebidas, valores) => {
+  let total = 0;
+  for (let i = 0; i < bebidas.length; i += 1) {
+    if (item === bebidas[i]) {
+      total += valores[i];
+      break;
+    }
+  }
+  return total;
+};
+
+const somaValores = (consumo, objeto) => {
+  let total = 0;
+  const comidas = Object.keys(objeto.fetchMenu().food);
+  const bebidas = Object.keys(objeto.fetchMenu().drink);
+  const foodValues = Object.values(objeto.fetchMenu().food);
+  const drinkValues = Object.values(objeto.fetchMenu().drink);
+
+  for (let i = 0; i < consumo.length; i += 1) {
+    total += somaComida(consumo[i], comidas, foodValues);
+    total += somaBebida(consumo[i], bebidas, drinkValues);
+  }
+  total = (total * 1.1).toFixed(2);
+  return Number(total);
+};
 
 const createMenu = (objeto) => {
   const objetoMenu = {
     fetchMenu: () => objeto,
     consumption: [],
     order: (string) => pushConsumption(objetoMenu.consumption, string),
-    pay: () => {
-      const pedidos = objetoMenu.consumption;
-      const itemsPrecos = Object.entries(objetoMenu.fetchMenu());
-    },
+    pay: () => somaValores(objetoMenu.consumption, objetoMenu),
   };
-
   return objetoMenu;
 };
 
@@ -115,15 +143,5 @@ const objetoCriado = createMenu({
     coca: 3,
   },
 });
-objetoCriado.order('coxinha');
-
-const fetchMenu = [
-  Object.values(objetoCriado.fetchMenu().food),
-];
-
-const valores = Object.values(fetchMenu);
-
-// console.log(fetchMenu);
-console.log(valores);
 
 module.exports = createMenu;
