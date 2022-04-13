@@ -81,49 +81,59 @@
 
 const pushConsumption = (key, string) => key.push(string);
 
-const somaComida = (item, comidas, valores) => {
-  let total = 0;
-  for (let i = 0; i < comidas.length; i += 1) {
-    if (item === comidas[i]) {
-      total += valores[i];
-      break;
-    }
-  }
-  return total;
-};
+// const somaComida = (item, comidas, valores) => {
+//   let total = 0;
+//   for (let i = 0; i < comidas.length; i += 1) {
+//     if (item === comidas[i]) {
+//       total += valores[i];
+//       break;
+//     }
+//   }
+//   return total;
+// };
 
-const somaBebida = (item, bebidas, valores) => {
-  let total = 0;
-  for (let i = 0; i < bebidas.length; i += 1) {
-    if (item === bebidas[i]) {
-      total += valores[i];
-      break;
-    }
-  }
-  return total;
-};
+// const somaBebida = (item, bebidas, valores) => {
+//   let total = 0;
+//   for (let i = 0; i < bebidas.length; i += 1) {
+//     if (item === bebidas[i]) {
+//       total += valores[i];
+//       break;
+//     }
+//   }
+//   return total;
+// };
 
-const somaValores = (consumo, objeto) => {
-  let total = 0;
-  const comidas = Object.keys(objeto.fetchMenu().food);
-  const bebidas = Object.keys(objeto.fetchMenu().drink);
-  const foodValues = Object.values(objeto.fetchMenu().food);
-  const drinkValues = Object.values(objeto.fetchMenu().drink);
+// const somaValores = (consumo, objeto) => {
+//   let total = 0;
+//   const comidas = Object.keys(objeto.fetchMenu().food);
+//   const bebidas = Object.keys(objeto.fetchMenu().drink);
+//   const foodValues = Object.values(objeto.fetchMenu().food);
+//   const drinkValues = Object.values(objeto.fetchMenu().drink);
 
-  for (let i = 0; i < consumo.length; i += 1) {
-    total += somaComida(consumo[i], comidas, foodValues);
-    total += somaBebida(consumo[i], bebidas, drinkValues);
-  }
-  total = (total * 1.1).toFixed(2);
-  return Number(total);
-};
+//   for (let i = 0; i < consumo.length; i += 1) {
+//     total += somaComida(consumo[i], comidas, foodValues);
+//     total += somaBebida(consumo[i], bebidas, drinkValues);
+//   }
+//   total = (total * 1.1).toFixed(2);
+//   return Number(total);
+// };
 
 const createMenu = (objeto) => {
   const objetoMenu = {
     fetchMenu: () => objeto,
     consumption: [],
     order: (string) => pushConsumption(objetoMenu.consumption, string),
-    pay: () => somaValores(objetoMenu.consumption, objetoMenu),
+    pay: () => {
+      let valor = (objetoMenu.consumption.reduce((total, item) => {
+      if (Object.keys(objetoMenu.fetchMenu().food).includes(item)) {
+      total += objetoMenu.fetchMenu().food[item];
+      return total;
+      }
+      total += objetoMenu.fetchMenu().drink[item];
+      return total;
+    }, 0) * 1.1).toFixed(2);
+    return Number(valor);
+    },
   };
   return objetoMenu;
 };
