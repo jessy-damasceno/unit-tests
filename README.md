@@ -6,6 +6,7 @@
 - [Habilidades](#habilidades)
 - [Entregáveis](#entregáveis)
   - [O que foi desenvolvido](#o-que-será-desenvolvido)
+  - [Tecnologias utilizadas](#tecnologias-utilizadas)
 
 ---
 
